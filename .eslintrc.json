@@ -1,0 +1,30 @@
+{
+		"extends": "airbnb",
+		"plugins": [
+			"react",
+			"jsx-a11y",
+			"import"
+		],
+		"rules": {
+			"no-unused-vars": 1,
+			"indent": [2, "tab"],
+			"no-tabs": 0,
+			"arrow-parens": [2, "as-needed"],
+			"react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+			"react/jsx-indent": [2, "tab"],
+			"react/jsx-indent-props": [2, "tab"],
+			"react/prefer-stateless-function": [0, { "ignorePureComponents": true }],
+			"prefer-destructuring": [0, {
+				"array": true,
+				"object": true
+			}, {
+				"enforceForRenamedProperties": false
+			}]
+		},
+		"globals": {
+			"document": true,
+			"localStorage": true,
+			"window": true,
+			"Headers": true
+		}
+}
