@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-const headers = new Headers({
-	'Content-Type': 'application/json',
-	Accept: 'application/json',
-});
+// const headers = new Headers({
+// 	'Content-Type': 'application/json',
+// 	Accept: 'application/json',
+// });
 
 export const requestPost = (url, data) => (
-	axios.post(url, headers, data)
+	axios.post(url, data)
 );
 
 export function setLocalStorageItem(key, value) {

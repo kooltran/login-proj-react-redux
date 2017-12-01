@@ -14,6 +14,8 @@ import reducers from './reducers';
 import App from './components/App';
 import Home from './containers/Home';
 import Login from './containers/Login';
+import Account from './containers/Account';
+import PrivateRoute from './containers/PrivateRoute';
 
 const store = createStore(
 	combineReducers({
@@ -34,6 +36,7 @@ ReactDOM.render(
 				<hr />
 				<Route exact path="/" component={Home} />
 				<Route path="/login" component={Login} />
+				<PrivateRoute path="/account" component={Account} />
 			</div>
 		</Router>
 	</Provider>

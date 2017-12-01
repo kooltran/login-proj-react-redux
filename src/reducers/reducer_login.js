@@ -1,29 +1,43 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAIL } from '../actions';
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAIL_AUTH, LOGIN_FAIL_NETWORK } from '../actions';
 
-const INITIAL_STATE = {
+const LOGIN_INIT_STATE = {
 	isLoading: false,
+	responseMessg: null,
+	redirectToReferrrer: false,
 	error: null,
 };
 
-export default function (state = INITIAL_STATE, action) {
+export default function (state = LOGIN_INIT_STATE, action) {
 	switch (action.type) {
 	case LOGIN_REQUEST:
+		console.log(...state);
 		return {
 			...state,
 			isLoading: true,
-			error: null,
 		};
 	case LOGIN_SUCCESS:
 		return {
 			...state,
 			isLoading: false,
+			responseMessg: action.payload.data.message,
+			redirectToReferrrer: true,
 			error: null,
 		};
-	case LOGIN_FAIL:
+	case LOGIN_FAIL_AUTH:
 		return {
 			...state,
 			isLoading: false,
-			error: action.payload.message,
+			responseMessg: action.payload.data.message,
+			redirectToReferrrer: false,
+			error: null,
+		};
+	case LOGIN_FAIL_NETWORK:
+		return {
+			...state,
+			isLoading: false,
+			responseMessg: null,
+			redirectToReferrrer: false,
+			error: 'bad network',
 		};
 	default:
 		return state;

@@ -19,12 +19,17 @@
 				"object": true
 			}, {
 				"enforceForRenamedProperties": false
+			}],
+			"react/self-closing-comp": ["error", {
+				"component": true,
+				"html": true
 			}]
 		},
 		"globals": {
 			"document": true,
 			"localStorage": true,
 			"window": true,
-			"Headers": true
+			"Headers": true,
+			"fetch": true
 		}
 }

@@ -4,8 +4,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import t from 'tcomb-form';
+import { locationShape } from 'react-router-props';
 // import { requestLogin, setLocalStorageItem } from '../helpers/requestLogin';
 import { loginAccount } from '../actions';
+// import { LOGIN_INIT_STATE } from '../reducers/reducer_login';
+
 
 const Form = t.form.Form;
 
@@ -76,40 +79,105 @@ class Login extends Component {
 		const value = this.form.getValue();
 		if (value) {
 			const postData = {
-				body: JSON.stringify({
-					username: value.name,
-					password: value.password,
-				}),
+				username: value.name,
+				password: value.password,
 			};
 			this.props.loginAccount(postData);
 		}
 	}
 
-	render() {
+	/* eslint class-methods-use-this: ["error",
+	{ "exceptMethods": ["showErrorMessage", "renderLoadingSpinner"] }] */
+	showErrorMessage(error) {
 		return (
-			<form className="container">
-				<Form
-					ref={el => { this.form = el; }}
-					type={FormSchema}
-					options={options}
-					onChange={this.onChange}
-				/>
-				<div className="form-group">
-					<button type="submit" className="btn btn-primary" onClick={this.save}>Login</button>
+			<p className="has-error">{error}</p>
+		);
+	}
+
+	renderLoadingSpinner() {
+		return (
+			<div className="loading-spinner">
+				<div className="dot-item dot1">
+					<div className="dot-winner">{}</div>
 				</div>
-			</form>
+				<div className="dot-item dot2">
+					<div className="dot-winner">{}</div>
+				</div>
+				<div className="dot-item dot3">
+					<div className="dot-winner">{}</div>
+				</div>
+				<div className="dot-item dot4">
+					<div className="dot-winner">{}</div>
+				</div>
+				<div className="dot-item dot5">
+					<div className="dot-winner">{}</div>
+				</div>
+			</div>
+		);
+	}
+
+	render() {
+		const { isLoading, responseMessg, redirectToReferrrer } = this.props.login;
+		const { from } = this.props.location || { from: { pathname: '/account' } };
+
+		if (redirectToReferrrer) {
+			return (
+				<Redirect to={from} />
+			);
+		}
+
+		return (
+			<div>
+				{ isLoading ? this.renderLoadingSpinner() : '' }
+				<form className="container" onSubmit={this.save}>
+					{ responseMessg ? this.showErrorMessage(responseMessg) : '' }
+					<Form
+						ref={el => { this.form = el; }}
+						type={FormSchema}
+						options={options}
+						onChange={this.onChange}
+					/>
+					<div className="form-group">
+						<button type="submit" className="btn btn-primary">Login</button>
+					</div>
+				</form>
+			</div>
 		);
 	}
 }
+
+Login.propTypes = {
+	loginAccount: PropTypes.func.isRequired,
+	login: PropTypes.shape({
+		isLoading: PropTypes.bool,
+		responseMessg: PropTypes.string,
+		redirectToReferrrer: PropTypes.bool,
+		error: PropTypes.string,
+	}),
+	location: PropTypes.shape({
+		hash: PropTypes.string.isRequired,
+		search: PropTypes.string.isRequired,
+		state: PropTypes.object.isRequired,
+	}).isRequired,
+};
+
+Login.defaultProps = {
+	login: {
+		isLoading: false,
+		responseMessg: null,
+		error: null,
+	},
+};
 
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ loginAccount }, dispatch);
 }
 
-Login.propTypes = {
-	// login: PropTypes.object.isRequired,
-	loginAccount: PropTypes.func.isRequired,
-};
+function mapStateToProp(state) {
+	return {
+		login: state.reducers.login,
+	};
+}
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProp, mapDispatchToProps)(Login);
