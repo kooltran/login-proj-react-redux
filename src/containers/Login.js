@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import t from 'tcomb-form';
-import { locationShape } from 'react-router-props';
-// import { requestLogin, setLocalStorageItem } from '../helpers/requestLogin';
+// import { locationShape } from 'react-router-props';
+import { getLocalStorageItem } from '../helpers/RequestLogin';
 import { loginAccount } from '../actions';
 // import { LOGIN_INIT_STATE } from '../reducers/reducer_login';
 
@@ -117,10 +117,12 @@ class Login extends Component {
 	}
 
 	render() {
-		const { isLoading, responseMessg, redirectToReferrrer } = this.props.login;
-		const { from } = this.props.location || { from: { pathname: '/account' } };
+		const { isLoading, responseMessg } = this.props.login;
+		const { from } = this.props.location.state || { from: { pathname: '/account' } };
+		const token = getLocalStorageItem('token');
+		console.log(responseMessg);
 
-		if (redirectToReferrrer) {
+		if (token) {
 			return (
 				<Redirect to={from} />
 			);
@@ -155,9 +157,9 @@ Login.propTypes = {
 		error: PropTypes.string,
 	}),
 	location: PropTypes.shape({
-		hash: PropTypes.string.isRequired,
-		search: PropTypes.string.isRequired,
-		state: PropTypes.object.isRequired,
+		hash: PropTypes.string,
+		search: PropTypes.string,
+		state: PropTypes.object,
 	}).isRequired,
 };
 

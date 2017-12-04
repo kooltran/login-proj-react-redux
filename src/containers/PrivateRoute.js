@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { locationShape } from 'react-router-props';
+// import { locationShape } from 'react-router-props';
 import {
 	Route,
 	Redirect,
@@ -14,16 +14,13 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 			{...rest}
 			render={props => (
 				isToken
-					?
-					(<Component {...props} />)
-					:
-					(
-						<Redirect to={{
+					? <Component {...props} />
+					: <Redirect
+						to={{
 							pathname: '/login',
 							state: { from: props.location },
 						}}
-						/>
-					)
+					/>
 			)}
 		/>
 	);
@@ -31,7 +28,16 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
 export default PrivateRoute;
 
+// PrivateRoute.propTypes = {
+// 	component: PropTypes.func.isRequired,
+// 	location: locationShape.isRequired,
+// };
+
 PrivateRoute.propTypes = {
 	component: PropTypes.func.isRequired,
-	location: locationShape.isRequired,
+	location: PropTypes.shape({
+		hash: PropTypes.string,
+		search: PropTypes.string,
+		state: PropTypes.object,
+	}).isRequired,
 };

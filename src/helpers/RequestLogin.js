@@ -17,12 +17,14 @@ export function setLocalStorageItem(key, value) {
 
 export function getLocalStorageItem(key) {
 	if (localStorage) { // check broweser support
-		localStorage.getItem(key);
+		return localStorage.getItem(key);
 	}
+	return null;
 }
 
 export function clearLocaStorageItem(key) {
 	if (localStorage) {
-		localStorage.removeItem(key);
+		return localStorage.removeItem(key);
 	}
+	return null;
 }

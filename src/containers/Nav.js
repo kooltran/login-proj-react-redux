@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-// import { getLocalStorageItem } from '../helpers/requestLogin';
-// import { clearLocaStorageItem } from '../helpers/requestLogin';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
+import { getLocalStorageItem, clearLocaStorageItem } from '../helpers/RequestLogin';
 
 export default class Nav extends Component {
 	render() {
-		// const isLogin = getLocalStorageItem('token');
+		const isLogin = getLocalStorageItem('token');
 		return (
 			<nav className="navbar navbar-default">
 				<div className="container-fluid">
@@ -18,6 +17,12 @@ export default class Nav extends Component {
 						<li><NavLink activeClassName="active" to="/register">Register</NavLink></li>
 						<li><NavLink activeClassName="active" to="/account">Account</NavLink></li>
 					</ul>
+					{
+						isLogin ?
+							<ul className="nav navbar-nav navbar-right">
+								<li><button to="/" onClick={() => clearLocaStorageItem('token')}>LogOut</button></li>
+							</ul> : ''
+					}
 				</div>
 			</nav>
 		);

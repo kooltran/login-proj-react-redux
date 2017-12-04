@@ -10,7 +10,6 @@ const LOGIN_INIT_STATE = {
 export default function (state = LOGIN_INIT_STATE, action) {
 	switch (action.type) {
 	case LOGIN_REQUEST:
-		console.log(...state);
 		return {
 			...state,
 			isLoading: true,
@@ -27,7 +26,7 @@ export default function (state = LOGIN_INIT_STATE, action) {
 		return {
 			...state,
 			isLoading: false,
-			responseMessg: action.payload.data.message,
+			responseMessg: null,
 			redirectToReferrrer: false,
 			error: null,
 		};
