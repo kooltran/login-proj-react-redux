@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { getLocalStorageItem, clearLocaStorageItem } from '../helpers/RequestLogin';
+import { getLocalStorageItem } from '../helpers/RequestLogin';
 
 export default class Nav extends Component {
 	render() {
@@ -20,7 +20,7 @@ export default class Nav extends Component {
 					{
 						isLogin ?
 							<ul className="nav navbar-nav navbar-right">
-								<li><button to="/" onClick={() => clearLocaStorageItem('token')}>LogOut</button></li>
+								<li><Link href="/logout" to="/logout">Log out</Link></li>
 							</ul> : ''
 					}
 				</div>

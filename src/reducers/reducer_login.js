@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAIL_AUTH, LOGIN_FAIL_NETWORK } from '../actions';
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAIL_AUTH, LOGIN_FAIL_NETWORK, RESET_REDIRECT_REFERRER } from '../actions';
 
 const LOGIN_INIT_STATE = {
 	isLoading: false,
@@ -18,11 +18,19 @@ export default function (state = LOGIN_INIT_STATE, action) {
 		return {
 			...state,
 			isLoading: false,
-			responseMessg: action.payload.data.message,
+			responseMessg: null,
 			redirectToReferrrer: true,
 			error: null,
 		};
 	case LOGIN_FAIL_AUTH:
+		return {
+			...state,
+			isLoading: false,
+			responseMessg: action.payload.data.message,
+			redirectToReferrrer: false,
+			error: null,
+		};
+	case RESET_REDIRECT_REFERRER:
 		return {
 			...state,
 			isLoading: false,

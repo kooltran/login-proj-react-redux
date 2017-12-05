@@ -1,10 +1,10 @@
-import { requestPost, setLocalStorageItem, getLocalStorageItem } from '../helpers/RequestLogin';
+import { requestPost, setLocalStorageItem } from '../helpers/RequestLogin';
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL_AUTH = 'LOGIN_FAIL_AUTH';
 export const LOGIN_FAIL_NETWORK = 'LOGIN_FAIL_NETWORK';
-export const LOGOUT_USER = 'LOGOUT_USER';
+export const RESET_REDIRECT_REFERRER = 'RESET_REDIRECT_REFERRER';
 
 
 export const loginRequest = () => (
@@ -28,6 +28,12 @@ export const loginFailAuth = response => (
 	}
 );
 
+export const resetRedirectReferrer = () => (
+	{
+		type: RESET_REDIRECT_REFERRER,
+	}
+);
+
 export const loginFailNetwork = error => (
 	{
 		type: LOGIN_FAIL_NETWORK,
@@ -45,6 +51,7 @@ export const loginAccount = postData => {
 				if (response.data.success) {
 					setLocalStorageItem('token', response.data.token);
 					dispatch(loginSuccess(response));
+					dispatch(resetRedirectReferrer());
 				} else {
 					dispatch(loginFailAuth(response));
 				}

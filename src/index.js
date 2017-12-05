@@ -16,6 +16,8 @@ import App from './components/App';
 import Home from './containers/Home';
 import Login from './containers/Login';
 import Account from './containers/Account';
+import Logout from './containers/Logout';
+import Register from './containers/Register';
 import PrivateRoute from './containers/PrivateRoute';
 
 const store = createStore(
@@ -37,6 +39,8 @@ ReactDOM.render(
 				<Switch>
 					<Route exact path="/" component={Home} />
 					<Route path="/login" component={Login} />
+					<Route path="/register" component={Register} />
+					<Route path="/logout" component={Logout} />
 					<PrivateRoute path="/account" component={Account} />
 				</Switch>
 			</div>
